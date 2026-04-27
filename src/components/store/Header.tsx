@@ -1,18 +1,39 @@
 import { Leaf, Plus, Search } from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   onAdd: () => void;
-  search: string;
-  onSearch: (v: string) => void;
+  search?: string;
+  onSearch?: (v: string) => void;
 }
 
 export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const handleSearch = (v: string) => {
+    if (onSearch) {
+      onSearch(v);
+    } else if (v && pathname !== "/productos") {
+      navigate(`/productos?q=${encodeURIComponent(v)}`);
+    }
+  };
+
+  const navClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      "rounded-full px-4 py-2 text-sm font-semibold transition-base",
+      isActive
+        ? "bg-primary text-primary-foreground shadow-primary"
+        : "text-foreground/70 hover:bg-secondary hover:text-foreground",
+    );
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
       <div className="container flex h-20 items-center gap-4">
-        <a href="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group">
           <div className="relative grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary shadow-primary transition-spring group-hover:scale-105">
             <Leaf className="h-5 w-5 text-primary-foreground" strokeWidth={2.5} />
             <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-accent ring-2 ring-background" />
@@ -23,19 +44,25 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
               Catálogo Pro
             </span>
           </div>
-        </a>
+        </Link>
 
-        <div className="relative ml-6 hidden flex-1 max-w-md md:block">
+        <nav className="ml-4 hidden items-center gap-1 lg:flex">
+          <NavLink to="/" end className={navClass}>Inicio</NavLink>
+          <NavLink to="/productos" className={navClass}>Productos</NavLink>
+          <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+        </nav>
+
+        <div className="relative ml-auto hidden flex-1 max-w-sm md:block">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
-            placeholder="Buscar por nombre, marca o código…"
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar producto, marca o código…"
             className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
           />
         </div>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-2 md:ml-2">
           <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
             <Plus className="h-4 w-4" strokeWidth={3} />
             <span className="hidden sm:inline">Nuevo producto</span>
@@ -44,14 +71,17 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
         </div>
       </div>
 
-      <div className="container pb-3 md:hidden">
-        <div className="relative">
+      <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
+        <NavLink to="/" end className={navClass}>Inicio</NavLink>
+        <NavLink to="/productos" className={navClass}>Productos</NavLink>
+        <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+        <div className="relative ml-2 min-w-[200px] flex-1 md:hidden">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
-            placeholder="Buscar producto…"
-            className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm"
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar…"
+            className="h-10 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm"
           />
         </div>
       </div>
