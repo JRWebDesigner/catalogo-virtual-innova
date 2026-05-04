@@ -23,11 +23,10 @@ interface ProductFormProps {
 
 const empty: NewProduct = {
   name: "",
+  image: "",
+  code: "",
   capacity: "",
   brand: "",
-  code: "",
-  stock: 0,
-  image: "",
 };
 
 export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductFormProps) => {
@@ -41,6 +40,7 @@ export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductForm
   }, [open, initial]);
 
   const handleFile = (file: File) => {
+    // Aceptar URLs de Google Drive directamente o archivos de imagen
     if (!file.type.startsWith("image/")) {
       toast.error("Selecciona un archivo de imagen válido");
       return;
@@ -56,12 +56,12 @@ export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductForm
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.brand.trim() || !form.code.trim() || !form.capacity.trim()) {
+    if (!form.name.trim() || !form.code.trim() || !form.capacity.trim() || !form.brand.trim()) {
       toast.error("Completa todos los campos obligatorios");
       return;
     }
     if (!form.image) {
-      toast.error("Carga una imagen del producto");
+      toast.error("Ingresa un enlace de imagen o sube una imagen");
       return;
     }
     onSave(form, initial?.id);
@@ -74,11 +74,11 @@ export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductForm
       <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto p-0 gap-0">
         <div className="bg-gradient-primary p-6 text-primary-foreground">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl font-black">
+            <DialogTitle className=" text-2xl font-black">
               {initial ? "Editar producto" : "Nuevo producto"}
             </DialogTitle>
             <DialogDescription className="text-primary-foreground/80">
-              Completa los datos. La imagen es obligatoria.
+              Completa: nombre, código, capacidad e imagen (enlace de Drive u archivo).
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -153,47 +153,45 @@ export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductForm
                 />
               </Field>
 
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Marca *">
-                  <Input
-                    value={form.brand}
-                    onChange={(e) => setForm({ ...form, brand: e.target.value })}
-                    placeholder="Botanika"
-                    required
-                  />
-                </Field>
-                <Field label="Código *">
-                  <Input
-                    value={form.code}
-                    onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-                    placeholder="BTK-001"
-                    className="font-mono"
-                    required
-                  />
-                </Field>
-              </div>
+              <Field label="Código del producto *">
+                <Input
+                  value={form.code}
+                  onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
+                  placeholder="BTK-001"
+                  className="font-mono"
+                  required
+                />
+              </Field>
 
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Capacidad *">
-                  <Input
-                    value={form.capacity}
-                    onChange={(e) => setForm({ ...form, capacity: e.target.value })}
-                    placeholder="250ml x 7 piezas"
-                    required
-                  />
-                </Field>
-                <Field label="Stock *">
-                  <Input
-                    type="number"
-                    min="0"
-                    value={form.stock}
-                    onChange={(e) =>
-                      setForm({ ...form, stock: Math.max(0, parseInt(e.target.value) || 0) })
-                    }
-                    required
-                  />
-                </Field>
-              </div>
+              <Field label="Capacidad *">
+                <Input
+                  value={form.capacity}
+                  onChange={(e) => setForm({ ...form, capacity: e.target.value })}
+                  placeholder="Ej: 250ml, 500ml, x 7 piezas"
+                  required
+                />
+              </Field>
+
+              <Field label="Marca *">
+                <Input
+                  value={form.brand}
+                  onChange={(e) => setForm({ ...form, brand: e.target.value })}
+                  placeholder="Ej: Botanika, tienda virtual, EcoBio"
+                  required
+                />
+              </Field>
+
+              <Field label="Enlace de imagen (Google Drive) *">
+                <Input
+                  value={form.image.startsWith("http") ? form.image : ""}
+                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  placeholder="https://drive.google.com/uc?export=view&id=..."
+                  required={!form.image.startsWith("data:")}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  O arrastra/sube un archivo de imagen abajo
+                </p>
+              </Field>
             </div>
           </div>
 

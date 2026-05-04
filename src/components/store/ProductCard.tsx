@@ -1,4 +1,4 @@
-import { Package, Pencil, Trash2 } from "lucide-react";
+import { Package, Pencil, Trash2, MessageCircle } from "lucide-react";
 import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,14 +9,19 @@ interface ProductCardProps {
   onDelete: (id: string) => void;
 }
 
-export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
-  const stockStatus =
-    product.stock === 0
-      ? { label: "Agotado", className: "bg-destructive text-destructive-foreground" }
-      : product.stock < 10
-      ? { label: `Bajo · ${product.stock}`, className: "bg-primary text-primary-foreground" }
-      : { label: `${product.stock} disp.`, className: "bg-accent text-accent-foreground" };
+const WHATSAPP_NUMBER = "76265987";
 
+const generateWhatsAppMessage = (product: Product): string => {
+  const message = `Hola, me interesa en el producto:\n\n📦 *${product.name}*\n📋 Código: ${product.code}\n📏 Capacidad: ${product.capacity}`;
+  return encodeURIComponent(message);
+};
+
+const getWhatsAppLink = (product: Product): string => {
+  const message = generateWhatsAppMessage(product);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+};
+
+export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-gradient-card shadow-sm transition-spring hover:-translate-y-1 hover:border-accent/50 hover:shadow-elegant animate-fade-up">
       <div className="relative aspect-square overflow-hidden bg-secondary">
@@ -32,11 +37,6 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
             <Package className="h-12 w-12" />
           </div>
         )}
-        <div className="absolute left-3 top-3">
-          <Badge className={`${stockStatus.className} rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider shadow-md`}>
-            {stockStatus.label}
-          </Badge>
-        </div>
         <div className="absolute right-3 top-3 flex gap-1.5 opacity-0 translate-y-1 transition-spring group-hover:opacity-100 group-hover:translate-y-0">
           <button
             onClick={() => onEdit(product)}
@@ -57,12 +57,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
 
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-accent-foreground/70">
-            <span className="rounded-full bg-accent/30 px-2 py-0.5 text-primary">
-              {product.brand}
-            </span>
-          </div>
-          <h3 className="mt-2 font-display text-lg font-bold leading-tight text-foreground line-clamp-2">
+          <h3 className=" text-lg font-bold leading-tight text-foreground line-clamp-2">
             {product.name}
           </h3>
         </div>
@@ -76,7 +71,27 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
             <dt className="text-muted-foreground">Código</dt>
             <dd className="font-mono text-xs font-semibold text-primary">{product.code}</dd>
           </div>
+          <div className="flex justify-between gap-2">
+            <dt className="text-muted-foreground">Marca</dt>
+            <dd className="font-mono text-xs font-semibold text-primary">{product.brand}</dd>
+          </div>
+          <div className="flex justify-between gap-2">
+            <dt className="text-muted-foreground">Unidad de Medida</dt>
+            <dd className="font-mono text-xs font-semibold text-primary">{product.capacity}</dd>
+          </div>
         </dl>
+
+        <a 
+          href={getWhatsAppLink(product)} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="mt-4"
+        >
+          <Button className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white rounded-lg">
+            <MessageCircle className="h-4 w-4" />
+            Consultar por WhatsApp
+          </Button>
+        </a>
       </div>
     </article>
   );

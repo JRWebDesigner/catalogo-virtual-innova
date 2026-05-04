@@ -3,19 +3,17 @@ import { ArrowRight, PackageOpen } from "lucide-react";
 import { StoreLayout } from "@/components/store/StoreLayout";
 import { Hero } from "@/components/store/Hero";
 import { ProductCard } from "@/components/store/ProductCard";
-import { BrandShowcase } from "@/components/store/BrandShowcase";
 import { useProducts } from "@/context/ProductsContext";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  const { products, featured, brands, deleteProduct } = useProducts();
-  const inStock = products.filter((p) => p.stock > 0).length;
+  const { products, featured, deleteProduct } = useProducts();
 
   return (
     <StoreLayout>
       {({ openEdit }) => (
         <>
-          <Hero total={products.length} inStock={inStock} brands={brands.length} />
+          <Hero total={products.length} />
 
           <section className="container py-12 md:py-16">
             <div className="mb-8 flex items-end justify-between gap-4">
@@ -23,7 +21,7 @@ const Index = () => {
                 <div className="inline-flex items-center gap-2 rounded-full bg-accent/30 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
                   Destacados
                 </div>
-                <h2 className="mt-3 font-display text-3xl font-black text-foreground md:text-4xl">
+                <h2 className="mt-3  text-3xl font-black text-foreground md:text-4xl">
                   Lo más reciente
                 </h2>
                 <p className="mt-1 text-muted-foreground">
@@ -60,8 +58,6 @@ const Index = () => {
               </Link>
             </div>
           </section>
-
-          <BrandShowcase brands={brands} />
         </>
       )}
     </StoreLayout>
@@ -73,7 +69,7 @@ const EmptyState = () => (
     <div className="grid h-16 w-16 place-items-center rounded-full bg-accent/30 text-primary">
       <PackageOpen className="h-7 w-7" />
     </div>
-    <h3 className="mt-4 font-display text-xl font-bold">Aún no hay productos</h3>
+    <h3 className="mt-4  text-xl font-bold">Aún no hay productos</h3>
     <p className="mt-1 max-w-sm text-sm text-muted-foreground">
       Agrega tu primer producto desde el botón "Nuevo producto".
     </p>

@@ -13,7 +13,7 @@ export const BrandShowcase = ({ brands }: BrandShowcaseProps) => {
           <div className="inline-flex items-center gap-2 rounded-full bg-accent/30 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
             <Tag className="h-3 w-3" /> Explora por marca
           </div>
-          <h2 className="mt-3 font-display text-3xl font-black text-foreground md:text-4xl">
+          <h2 className="mt-3  text-3xl font-black text-foreground md:text-4xl">
             Nuestras marcas
           </h2>
         </div>
@@ -45,7 +45,7 @@ export const BrandShowcase = ({ brands }: BrandShowcaseProps) => {
               <span className="text-[10px] font-bold uppercase tracking-wider text-accent">
                 {brand.count} productos
               </span>
-              <span className="font-display text-lg font-black leading-tight text-primary-foreground">
+              <span className=" text-lg font-black leading-tight text-primary-foreground">
                 {brand.name}
               </span>
             </div>

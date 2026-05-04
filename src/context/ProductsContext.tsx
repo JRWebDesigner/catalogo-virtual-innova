@@ -1,60 +1,160 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useMemo, useState, useEffect } from "react";
 import { NewProduct, Product } from "@/types/product";
 import { sampleProducts } from "@/data/sampleProducts";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 interface ProductsContextValue {
   products: Product[];
   featured: Product[];
-  brands: { name: string; count: number; cover?: string }[];
-  addProduct: (data: NewProduct) => void;
-  updateProduct: (id: string, data: NewProduct) => void;
-  deleteProduct: (id: string) => void;
+  addProduct: (data: NewProduct) => Promise<void>;
+  updateProduct: (id: string, data: NewProduct) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
+  loading: boolean;
 }
 
 const ProductsContext = createContext<ProductsContextValue | null>(null);
 
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>(sampleProducts);
+  const [products, setProducts] = useState<Product[]>(sampleProducts); // ✅ Inicializar con sampleProducts
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          setProducts(sampleProducts);
+          toast.error(`No se pudieron cargar los productos: ${error.message}`);
+        } else if (data && data.length > 0) {
+          setProducts(data as Product[]);
+        } else {
+          setProducts(sampleProducts);
+        }
+      } catch (err: any) {
+        setProducts(sampleProducts);
+        toast.error("Error de conexión con Supabase");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const value = useMemo<ProductsContextValue>(() => {
-    const brandsMap = new Map<string, { count: number; cover?: string }>();
-    products.forEach((p) => {
-      const entry = brandsMap.get(p.brand) ?? { count: 0, cover: p.image };
-      entry.count += 1;
-      if (!entry.cover && p.image) entry.cover = p.image;
-      brandsMap.set(p.brand, entry);
-    });
-
     return {
       products,
       featured: products.slice(0, 10),
-      brands: Array.from(brandsMap.entries())
-        .map(([name, v]) => ({ name, count: v.count, cover: v.cover }))
-        .sort((a, b) => b.count - a.count),
-      addProduct: (data) => {
+      addProduct: async (data) => {
         const newProduct: Product = {
           ...data,
           id: crypto.randomUUID(),
           createdAt: new Date().toISOString(),
         };
+        
+        // Actualizar UI inmediatamente
         setProducts((prev) => [newProduct, ...prev]);
+        
+        try {
+          const { error } = await supabase
+            .from("products")
+            .insert([{
+              id: newProduct.id,
+              name: data.name,
+              image: data.image,
+              code: data.code,
+              capacity: data.capacity,
+              brand: data.brand,
+              created_at: newProduct.createdAt,
+            }]);
+          
+          if (error) {
+            toast.error(`Error al guardar: ${error.message || "Error desconocido"}`);
+            // Revertir cambio en UI
+            setProducts((prev) => prev.filter(p => p.id !== newProduct.id));
+          } else {
+            toast.success("Producto agregado");
+          }
+        } catch (err: any) {
+          toast.error(`Error: ${err?.message || "No se pudo conectar a Supabase"}`);
+          setProducts((prev) => prev.filter(p => p.id !== newProduct.id));
+        }
       },
-      updateProduct: (id, data) => {
+      updateProduct: async (id, data) => {
+        const oldProduct = products.find(p => p.id === id);
+        
+        // Actualizar UI inmediatamente
         setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...data } : p)));
+        
+        try {
+          const { error } = await supabase
+            .from("products")
+            .update({
+              name: data.name,
+              image: data.image,
+              code: data.code,
+              capacity: data.capacity,
+              brand: data.brand,
+            })
+            .eq("id", id);
+          
+          if (error) {
+            toast.error(`Error: ${error.message || "Error al actualizar"}`);
+            // Revertir cambio
+            if (oldProduct) {
+              setProducts((prev) => prev.map((p) => p.id === id ? oldProduct : p));
+            }
+          } else {
+            toast.success("Producto actualizado");
+          }
+        } catch (err: any) {
+          toast.error(`Error: ${err?.message || "No se pudo conectar"}`);
+          if (oldProduct) {
+            setProducts((prev) => prev.map((p) => p.id === id ? oldProduct : p));
+          }
+        }
       },
-      deleteProduct: (id) => {
+      deleteProduct: async (id) => {
+        const oldProducts = products;
+        
+        // Eliminar de UI inmediatamente
         setProducts((prev) => prev.filter((p) => p.id !== id));
-        toast.success("Producto eliminado");
+        
+        try {
+          const { error } = await supabase
+            .from("products")
+            .delete()
+            .eq("id", id);
+          
+          if (error) {
+            toast.error(`Error: ${error.message || "Error al eliminar"}`);
+            // Revertir cambio
+            setProducts(oldProducts);
+          } else {
+            toast.success("Producto eliminado");
+          }
+        } catch (err: any) {
+          toast.error(`Error: ${err?.message || "No se pudo conectar"}`);
+          setProducts(oldProducts);
+        }
       },
+      loading,
     };
-  }, [products]);
+  }, [products, loading]);
 
   return <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>;
 };
 
+// ✅ Hook personalizado para usar el contexto
 export const useProducts = () => {
-  const ctx = useContext(ProductsContext);
-  if (!ctx) throw new Error("useProducts must be used inside ProductsProvider");
-  return ctx;
+  const context = useContext(ProductsContext);
+  if (!context) {
+    throw new Error("useProducts debe usarse dentro de ProductsProvider");
+  }
+  return context;
 };

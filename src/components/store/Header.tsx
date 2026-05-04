@@ -34,14 +34,8 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
       <div className="container flex h-20 items-center gap-4">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="relative grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary shadow-primary transition-spring group-hover:scale-105">
-            <Leaf className="h-5 w-5 text-primary-foreground" strokeWidth={2.5} />
-            <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-accent ring-2 ring-background" />
-          </div>
           <div className="flex flex-col leading-none">
-            <span className="font-display text-2xl font-black text-primary">Verdelima</span>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-              Catálogo Pro
+            <span className=" text-2xl font-black ">Tienda Virtual
             </span>
           </div>
         </Link>

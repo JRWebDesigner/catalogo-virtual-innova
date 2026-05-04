@@ -1,11 +1,10 @@
 export interface Product {
   id: string;
   name: string;
-  capacity: string; // e.g. "250ml x7 piezas"
-  brand: string;
-  code: string;
-  stock: number;
-  image: string;
+  image: string; // Enlace de Google Drive
+  code: string; // Código del producto
+  capacity: string; // e.g. "250ml", "x 7 piezas"
+  brand: string; // Marca del producto
   createdAt: string;
 }
 

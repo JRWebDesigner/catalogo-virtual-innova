@@ -33,7 +33,7 @@ export const StoreLayout = ({ children, search, onSearch }: StoreLayoutProps) =>
       <footer className="mt-16 border-t border-border bg-secondary/40">
         <div className="container flex flex-col items-center justify-between gap-3 py-8 text-sm text-muted-foreground md:flex-row">
           <p>
-            <span className="font-display font-black text-primary">Verdelima</span> · Tienda virtual profesional
+            <span className=" font-black text-primary">tienda virtual</span> · Tienda virtual profesional
           </p>
           <p className="text-xs">Listo para conectarse a tu base de datos.</p>
         </div>
