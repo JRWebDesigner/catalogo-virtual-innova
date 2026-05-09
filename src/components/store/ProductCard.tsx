@@ -37,7 +37,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
             <Package className="h-12 w-12" />
           </div>
         )}
-        <div className="absolute right-3 top-3 flex gap-1.5 opacity-0 translate-y-1 transition-spring group-hover:opacity-100 group-hover:translate-y-0">
+        {/* <div className="absolute right-3 top-3 flex gap-1.5 opacity-0 translate-y-1 transition-spring group-hover:opacity-100 group-hover:translate-y-0">
           <button
             onClick={() => onEdit(product)}
             className="grid h-9 w-9 place-items-center rounded-full bg-background/95 text-primary shadow-md backdrop-blur transition-base hover:bg-accent hover:text-accent-foreground"
@@ -52,7 +52,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
           >
             <Trash2 className="h-4 w-4" />
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
