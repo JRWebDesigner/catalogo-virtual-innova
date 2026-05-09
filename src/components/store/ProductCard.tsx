@@ -1,8 +1,8 @@
 import { Package, Pencil, Trash2, MessageCircle } from "lucide-react";
 import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
+//import { Badge } from "@/components/ui/badge";
+//te amo rossy
 interface ProductCardProps {
   product: Product;
   onEdit: (p: Product) => void;
