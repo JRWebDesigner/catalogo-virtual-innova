@@ -48,7 +48,7 @@ const Productos = () => {
 
   return (
     <StoreLayout search={search} onSearch={setSearch}>
-      {({ openEdit }) => (
+      {({ openEdit, openImport }) => (
         <section className="container py-10 md:py-14">
           <div className="mb-6">
             <h1 className=" text-4xl font-black text-foreground md:text-5xl">

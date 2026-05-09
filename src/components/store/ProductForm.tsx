@@ -176,7 +176,7 @@ export const ProductForm = ({ open, onOpenChange, initial, onSave }: ProductForm
                 <Input
                   value={form.brand}
                   onChange={(e) => setForm({ ...form, brand: e.target.value })}
-                  placeholder="Ej: Botanika, tienda virtual, EcoBio"
+                  placeholder="Ej: Botanika, CATALOGO VIRTUAL, EcoBio"
                   required
                 />
               </Field>

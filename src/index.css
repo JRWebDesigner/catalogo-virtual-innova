@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tienda Virtual — Sistema de diseño
+/* CATALOGO VIRTUAL — Sistema de diseño
    Paleta principal: Verde limón (lime) + Guindo (burgundy/wine)
    Todos los colores en HSL.
 */
@@ -20,7 +20,7 @@
     --popover-foreground: 345 35% 12%;
 
     /* Guindo — color principal de marca */
-    --primary: 345 75% 28%;
+    --primary: 0 0% 0%;
     --primary-foreground: 75 90% 96%;
     --primary-glow: 345 70% 42%;
 

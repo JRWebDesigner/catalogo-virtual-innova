@@ -23,7 +23,7 @@ const getWhatsAppLink = (product: Product): string => {
 
 export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-gradient-card shadow-sm transition-spring hover:-translate-y-1 hover:border-accent/50 hover:shadow-elegant animate-fade-up">
+    <article className="group relative flex flex-col overflow-hidden border border-border bg-gradient-card shadow-sm transition-spring hover:-translate-y-1 hover:border-accent/50 hover:shadow-elegant animate-fade-up">
       <div className="relative aspect-square overflow-hidden bg-secondary">
         {product.image ? (
           <img
@@ -57,28 +57,27 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
 
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div>
-          <h3 className=" text-lg font-bold leading-tight text-foreground line-clamp-2">
+          <h3 className=" text-lg font-bold leading-tight text-foreground line-clamp-2 text-center">
             {product.name}
           </h3>
         </div>
 
         <dl className="mt-auto space-y-1.5 text-sm">
-          <div className="flex justify-between gap-2 border-t border-dashed border-border pt-2.5">
-            <dt className="text-muted-foreground">Capacidad</dt>
-            <dd className="font-semibold text-foreground text-right">{product.capacity}</dd>
+          <div className="flex justify-center gap-2 border-t border-dashed border-border pt-2.5">
+            <dd className="font-semibold text-foreground text-center">{product.capacity}</dd>
           </div>
-          <div className="flex justify-between gap-2">
+          {/* <div className="flex justify-between gap-2">
             <dt className="text-muted-foreground">Código</dt>
             <dd className="font-mono text-xs font-semibold text-primary">{product.code}</dd>
-          </div>
+          </div> */}
           <div className="flex justify-between gap-2">
             <dt className="text-muted-foreground">Marca</dt>
             <dd className="font-mono text-xs font-semibold text-primary">{product.brand}</dd>
           </div>
-          <div className="flex justify-between gap-2">
+          {/* <div className="flex justify-between gap-2">
             <dt className="text-muted-foreground">Unidad de Medida</dt>
             <dd className="font-mono text-xs font-semibold text-primary">{product.capacity}</dd>
-          </div>
+          </div> */}
         </dl>
 
         <a 
@@ -87,9 +86,9 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
           rel="noopener noreferrer"
           className="mt-4"
         >
-          <Button className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white rounded-lg">
+          <Button className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white text-lg">
             <MessageCircle className="h-4 w-4" />
-            Consultar por WhatsApp
+            Obtener mas informacion
           </Button>
         </a>
       </div>

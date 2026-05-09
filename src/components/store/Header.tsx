@@ -1,4 +1,4 @@
-import { Leaf, Plus, Search } from "lucide-react";
+import { Leaf, Plus, Search, Upload } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,11 +6,12 @@ import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   onAdd: () => void;
+  onImport?: () => void;
   search?: string;
   onSearch?: (v: string) => void;
 }
 
-export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
+export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -33,14 +34,8 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
       <div className="container flex h-20 items-center gap-4">
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="flex flex-col leading-none">
-            <span className=" text-2xl font-black ">Tienda Virtual
-            </span>
-          </div>
-        </Link>
-
         <nav className="ml-4 hidden items-center gap-1 lg:flex">
+          <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
           <NavLink to="/" end className={navClass}>Inicio</NavLink>
           <NavLink to="/productos" className={navClass}>Productos</NavLink>
           <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
@@ -57,6 +52,13 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
         </div>
 
         <div className="flex items-center gap-2 md:ml-2">
+          {onImport && (
+            <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
+              <Upload className="h-4 w-4" strokeWidth={3} />
+              <span className="hidden sm:inline">Importar CSV</span>
+              <span className="sm:hidden">CSV</span>
+            </Button>
+          )}
           <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
             <Plus className="h-4 w-4" strokeWidth={3} />
             <span className="hidden sm:inline">Nuevo producto</span>
@@ -66,6 +68,7 @@ export const Header = ({ onAdd, search, onSearch }: HeaderProps) => {
       </div>
 
       <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
+        <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
         <NavLink to="/" end className={navClass}>Inicio</NavLink>
         <NavLink to="/productos" className={navClass}>Productos</NavLink>
         <NavLink to="/marcas" className={navClass}>Marcas</NavLink>

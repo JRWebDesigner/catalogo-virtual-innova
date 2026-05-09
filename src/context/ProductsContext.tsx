@@ -8,6 +8,7 @@ interface ProductsContextValue {
   products: Product[];
   featured: Product[];
   addProduct: (data: NewProduct) => Promise<void>;
+  bulkAddProducts: (products: NewProduct[]) => Promise<void>;
   updateProduct: (id: string, data: NewProduct) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
   loading: boolean;
@@ -83,6 +84,45 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
         } catch (err: any) {
           toast.error(`Error: ${err?.message || "No se pudo conectar a Supabase"}`);
           setProducts((prev) => prev.filter(p => p.id !== newProduct.id));
+        }
+      },
+      bulkAddProducts: async (newProducts) => {
+        const productsToAdd = newProducts.map(data => ({
+          id: crypto.randomUUID(),
+          ...data,
+          createdAt: new Date().toISOString(),
+        } as Product));
+        
+        // Actualizar UI inmediatamente
+        setProducts((prev) => [...productsToAdd, ...prev]);
+        
+        try {
+          const { error } = await supabase
+            .from("products")
+            .insert(
+              productsToAdd.map((p) => ({
+                id: p.id,
+                name: p.name,
+                image: p.image,
+                code: p.code,
+                capacity: p.capacity,
+                brand: p.brand,
+                created_at: p.createdAt,
+              }))
+            );
+          
+          if (error) {
+            toast.error(`Error al importar: ${error.message || "Error desconocido"}`);
+            // Revertir cambio en UI
+            setProducts((prev) => prev.filter(p => !productsToAdd.some(np => np.id === p.id)));
+            throw new Error(error.message);
+          } else {
+            toast.success(`${newProducts.length} producto${newProducts.length !== 1 ? "s" : ""} importado${newProducts.length !== 1 ? "s" : ""}`);
+          }
+        } catch (err: any) {
+          toast.error(`Error: ${err?.message || "No se pudo conectar a Supabase"}`);
+          setProducts((prev) => prev.filter(p => !productsToAdd.some(np => np.id === p.id)));
+          throw err;
         }
       },
       updateProduct: async (id, data) => {

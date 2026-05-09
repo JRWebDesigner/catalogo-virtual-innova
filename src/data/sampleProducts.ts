@@ -17,7 +17,7 @@ export const sampleProducts: Product[] = [
     image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80",
     code: "CHR-002",
     capacity: "250ml",
-    brand: "tienda virtual",
+    brand: "CATALOGO VIRTUAL",
     createdAt: new Date().toISOString(),
   },
   {

@@ -11,7 +11,7 @@ const Index = () => {
 
   return (
     <StoreLayout>
-      {({ openEdit }) => (
+      {({ openEdit, openImport }) => (
         <>
           <Hero total={products.length} />
 

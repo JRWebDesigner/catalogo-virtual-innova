@@ -11,13 +11,12 @@ export const Hero = ({ total }: HeroProps) => {
       <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
 
       <div className="container relative py-16 md:py-24">
-        <div className="max-w-3xl animate-fade-up">
-          
-          
+        <div className="animate-fade-up text-white text-center text-5xl font-bold">
+          <h1>Obten aqui todo lo necesario para tu laboratorio</h1>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-3 md:max-w-xl md:gap-4">
-          <StatCard icon={Package} label="Productos en catálogo" value={total} />
+        <div className="mt-12 grid grid-cols-1 gap-3 md:gap-4 animate-fade-up text-white text-center text-3xl font-bold">
+          <h2>Mas de {total-1} productos disponibles</h2>
         </div>
       </div>
     </section>
