@@ -33,54 +33,61 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
-      <div className="container flex h-20 items-center gap-4">
-        <nav className="ml-4 hidden items-center gap-1 lg:flex">
-          <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
+      {/* Desktop header */}
+      <div className="hidden lg:block">
+        <div className="container flex h-20 items-center gap-6">
+          {/* Logo */}
+          <NavLink to="/" end className="flex-shrink-0 text-xl font-bold text-primary">
+            CATALOGO VIRTUAL
+          </NavLink>
+
+          {/* Navigation */}
+          <nav className="flex items-center gap-1">
+            <NavLink to="/" end className={navClass}>Inicio</NavLink>
+            <NavLink to="/productos" className={navClass}>Productos</NavLink>
+            <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+          </nav>
+
+          {/* Search */}
+          <div className="relative ml-auto flex-1 max-w-sm">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search ?? ""}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Buscar producto, marca o código…"
+              className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile/Tablet header */}
+      <div className="lg:hidden">
+        {/* Top bar with logo and search */}
+        <div className="container flex h-16 items-center gap-3 py-2">
+          {/* Logo */}
+          <NavLink to="/" end className="flex-shrink-0 text-xs font-bold text-primary sm:text-sm">
+            CATALOGO VIRTUAL
+          </NavLink>
+
+          {/* Search - visible on tablet and small screens */}
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search ?? ""}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="Buscar…"
+              className="h-9 rounded-full border-border/80 bg-secondary/60 pl-9 text-xs placeholder:text-xs"
+            />
+          </div>
+        </div>
+
+        {/* Navigation tabs */}
+        <nav className="container flex items-center gap-1 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <NavLink to="/" end className={navClass}>Inicio</NavLink>
           <NavLink to="/productos" className={navClass}>Productos</NavLink>
           <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
         </nav>
-
-        <div className="relative ml-auto hidden flex-1 max-w-sm md:block">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={search ?? ""}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="Buscar producto, marca o código…"
-            className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
-          />
-        </div>
-
-        {/* <div className="flex items-center gap-2 md:ml-2">
-          {onImport && (
-            <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
-              <Upload className="h-4 w-4" strokeWidth={3} />
-              <span className="hidden sm:inline">Importar CSV</span>
-              <span className="sm:hidden">CSV</span>
-            </Button>
-          )}
-          <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
-            <Plus className="h-4 w-4" strokeWidth={3} />
-            <span className="hidden sm:inline">Nuevo producto</span>
-            <span className="sm:hidden">Nuevo</span>
-          </Button> 
-        </div> 
-      </div>
-
-      <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
-        <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
-        <NavLink to="/" end className={navClass}>Inicio</NavLink>
-        <NavLink to="/productos" className={navClass}>Productos</NavLink>
-        <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
-        <div className="relative ml-2 min-w-[200px] flex-1 md:hidden">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={search ?? ""}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="Buscar…"
-            className="h-10 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm"
-          />
-        </div>
       </div>
     </header>
   );

@@ -54,9 +54,6 @@ const Productos = () => {
             <h1 className=" text-4xl font-black text-foreground md:text-5xl">
               Todos los productos
             </h1>
-            <p className="mt-1 text-muted-foreground">
-              {filtered.length} producto{filtered.length !== 1 && "s"} en catálogo
-            </p>
           </div>
 
           <div className="mb-8 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-secondary/40 p-3">
