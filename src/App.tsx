@@ -8,7 +8,7 @@ import Productos from "./pages/Productos.tsx";
 import Marcas from "./pages/Marcas.tsx";
 import MarcaDetalle from "./pages/MarcaDetalle.tsx";
 import NotFound from "./pages/NotFound.tsx";
-
+// te amo rossy
 const App = () => (
   <TooltipProvider>
     <Toaster />
