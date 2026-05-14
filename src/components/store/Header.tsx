@@ -48,6 +48,30 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
             <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
           </nav>
 
+        <div className="relative ml-auto hidden flex-1 max-w-sm md:block">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar producto, marca o código…"
+            className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
+          />
+        </div>
+
+        {/* <div className="flex items-center gap-2 md:ml-2">
+          {onImport && (
+            <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
+              <Upload className="h-4 w-4" strokeWidth={3} />
+              <span className="hidden sm:inline">Importar CSV</span>
+              <span className="sm:hidden">CSV</span>
+            </Button>
+          )}
+          <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
+            <Plus className="h-4 w-4" strokeWidth={3} />
+            <span className="hidden sm:inline">Nuevo producto</span>
+            <span className="sm:hidden">Nuevo</span>
+          </Button> 
+        </div>  */}
           {/* Search */}
           <div className="relative ml-auto flex-1 max-w-sm">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
