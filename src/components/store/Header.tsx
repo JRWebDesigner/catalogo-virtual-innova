@@ -45,7 +45,7 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
           <nav className="flex items-center gap-1">
             <NavLink to="/" end className={navClass}>Inicio</NavLink>
             <NavLink to="/productos" className={navClass}>Productos</NavLink>
-            <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+            {/* <NavLink to="/marcas" className={navClass}>Marcas</NavLink> */}
           </nav>
 
         {/* <div className="flex items-center gap-2 md:ml-2">
@@ -100,7 +100,7 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
         <nav className="container flex items-center gap-1 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <NavLink to="/" end className={navClass}>Inicio</NavLink>
           <NavLink to="/productos" className={navClass}>Productos</NavLink>
-          <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+          {/* <NavLink to="/marcas" className={navClass}>Marcas</NavLink> */}
         </nav>
       </div>
     </header>
