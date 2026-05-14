@@ -51,7 +51,7 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
           />
         </div>
 
-       <div className="flex items-center gap-2 md:ml-2">
+        {/* <div className="flex items-center gap-2 md:ml-2">
           {onImport && (
             <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
               <Upload className="h-4 w-4" strokeWidth={3} />

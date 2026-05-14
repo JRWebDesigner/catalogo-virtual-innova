@@ -2,7 +2,7 @@ import { Package, Pencil, Trash2, MessageCircle } from "lucide-react";
 import { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 //import { Badge } from "@/components/ui/badge";
-//te amo rossy
+
 interface ProductCardProps {
   product: Product;
   onEdit: (p: Product) => void;
@@ -25,15 +25,27 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
   return (
     <article className="group relative flex flex-col overflow-hidden border border-border bg-gradient-card shadow-sm transition-spring hover:-translate-y-1 hover:border-accent/50 hover:shadow-elegant animate-fade-up">
       <div className="relative aspect-square overflow-hidden bg-secondary">
+        {/* Logo de fondo */}
+        <div 
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: `url(/favicon.ico)`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100%",
+          }}
+        />
+        
+        {/* Imagen del producto superpuesta */}
         {product.image ? (
           <img
             src={product.image}
             alt={product.name}
             loading="lazy"
-            className="h-full w-full object-cover transition-spring group-hover:scale-105"
+            className="relative h-full w-full object-cover transition-spring group-hover:scale-105"
           />
         ) : (
-          <div className="grid h-full w-full place-items-center text-muted-foreground">
+          <div className="relative grid h-full w-full place-items-center text-muted-foreground">
             <Package className="h-12 w-12" />
           </div>
         )}
