@@ -16,7 +16,7 @@ export const Hero = ({ total }: HeroProps) => {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-3 md:gap-4 animate-fade-up text-white text-center text-3xl font-bold">
-          <h2>Mas de {total-1} productos disponibles</h2>
+          <h2>Mas de 1000 productos disponibles</h2>
         </div>
       </div>
     </section>
