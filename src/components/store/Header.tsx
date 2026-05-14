@@ -64,7 +64,7 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
             <span className="hidden sm:inline">Nuevo producto</span>
             <span className="sm:hidden">Nuevo</span>
           </Button> 
-        </div> 
+        </div>  */}
       </div>
 
       <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
