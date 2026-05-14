@@ -1,6 +1,5 @@
 import { Leaf, Plus, Search, Upload } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-//import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -50,21 +49,6 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
             className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
           />
         </div>
-
-        {/* <div className="flex items-center gap-2 md:ml-2">
-          {onImport && (
-            <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
-              <Upload className="h-4 w-4" strokeWidth={3} />
-              <span className="hidden sm:inline">Importar CSV</span>
-              <span className="sm:hidden">CSV</span>
-            </Button>
-          )}
-          <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
-            <Plus className="h-4 w-4" strokeWidth={3} />
-            <span className="hidden sm:inline">Nuevo producto</span>
-            <span className="sm:hidden">Nuevo</span>
-          </Button> 
-        </div>  */}
       </div>
 
       <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
