@@ -1,44 +1,87 @@
-import { Package, Sparkles, TrendingUp } from "lucide-react";
+import { Leaf, Plus, Search, Upload } from "lucide-react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+//import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-interface HeroProps {
-  total: number;
+interface HeaderProps {
+  onAdd: () => void;
+  onImport?: () => void;
+  search?: string;
+  onSearch?: (v: string) => void;
 }
 
-export const Hero = ({ total }: HeroProps) => {
-  return (
-    <section className="relative overflow-hidden bg-gradient-hero">
-      <div className="absolute inset-0 opacity-30 mix-blend-overlay" />
-      <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
+export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-      <div className="container relative py-16 md:py-24">
-        <div className="animate-fade-up text-white text-center text-5xl font-bold">
-          <h1>Obten aqui todo lo necesario para tu laboratorio</h1>
+  const handleSearch = (v: string) => {
+    if (onSearch) {
+      onSearch(v);
+    } else if (v && pathname !== "/productos") {
+      navigate(`/productos?q=${encodeURIComponent(v)}`);
+    }
+  };
+
+  const navClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      "rounded-full px-4 py-2 text-sm font-semibold transition-base",
+      isActive
+        ? "bg-primary text-primary-foreground shadow-primary"
+        : "text-foreground/70 hover:bg-secondary hover:text-foreground",
+    );
+
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
+      <div className="container flex h-20 items-center gap-4">
+        <nav className="ml-4 hidden items-center gap-1 lg:flex">
+          <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
+          <NavLink to="/" end className={navClass}>Inicio</NavLink>
+          <NavLink to="/productos" className={navClass}>Productos</NavLink>
+          <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+        </nav>
+
+        <div className="relative ml-auto hidden flex-1 max-w-sm md:block">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar producto, marca o código…"
+            className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
+          />
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-3 md:gap-4 animate-fade-up text-white text-center text-3xl font-bold">
-          <h2>Mas de 1000 productos disponibles</h2>
+        {/* <div className="flex items-center gap-2 md:ml-2">
+          {onImport && (
+            <Button onClick={onImport} variant="outline" size="lg" className="gap-2">
+              <Upload className="h-4 w-4" strokeWidth={3} />
+              <span className="hidden sm:inline">Importar CSV</span>
+              <span className="sm:hidden">CSV</span>
+            </Button>
+          )}
+          <Button onClick={onAdd} variant="hero" size="lg" className="gap-2">
+            <Plus className="h-4 w-4" strokeWidth={3} />
+            <span className="hidden sm:inline">Nuevo producto</span>
+            <span className="sm:hidden">Nuevo</span>
+          </Button> 
+        </div>  */}
+      </div>
+
+      <div className="container flex items-center gap-2 overflow-x-auto pb-3 lg:hidden">
+        <NavLink to="/" end className={"text-[1.5rem] font-bold text-primary"}>CATALOGO VIRTUAL</NavLink>
+        <NavLink to="/" end className={navClass}>Inicio</NavLink>
+        <NavLink to="/productos" className={navClass}>Productos</NavLink>
+        <NavLink to="/marcas" className={navClass}>Marcas</NavLink>
+        <div className="relative ml-2 min-w-[200px] flex-1 md:hidden">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar…"
+            className="h-10 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm"
+          />
         </div>
       </div>
-    </section>
+    </header>
   );
 };
-
-const StatCard = ({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: typeof Package;
-  label: string;
-  value: number;
-}) => (
-  <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/10 p-4 backdrop-blur-md transition-spring hover:scale-[1.02] hover:bg-primary-foreground/15 md:p-5">
-    <Icon className="h-5 w-5 text-accent" strokeWidth={2.5} />
-    <div className="mt-3  text-3xl font-black text-primary-foreground md:text-4xl">
-      {value}
-    </div>
-    <div className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/70">
-      {label}
-    </div>
-  </div>
-);
