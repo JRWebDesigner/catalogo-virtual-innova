@@ -1,5 +1,5 @@
-import { Leaf, Plus, Search, Upload } from "lucide-react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
