@@ -37,7 +37,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-3xl font-bold">Limón Guindo</CardTitle>
+          <CardTitle className="text-3xl font-bold">Catalogo Virtual</CardTitle>
           <CardDescription>Panel de Administración</CardDescription>
         </CardHeader>
         <CardContent>
