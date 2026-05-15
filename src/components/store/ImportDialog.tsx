@@ -81,9 +81,9 @@ export const ImportDialog = ({ open, onOpenChange, onImport }: ImportDialogProps
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Importar productos desde CSV</DialogTitle>
+          <DialogTitle>Importar productos desde CSV/Excel</DialogTitle>
           <DialogDescription>
-            Carga un archivo CSV con la estructura: nro, producto, marca, unidad, url, codigo
+            Estructura requerida: nombre producto, capacidad, marca, código, url imagen
           </DialogDescription>
         </DialogHeader>
 

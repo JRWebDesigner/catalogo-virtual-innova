@@ -1,14 +1,5 @@
 import { NewProduct } from "@/types/product";
 
-export interface CSVRow {
-  nro?: string;
-  producto?: string;
-  marca?: string;
-  unidad?: string;
-  url?: string;
-  codigo?: string;
-}
-
 export interface ParsedProduct extends NewProduct {
   rowNumber: number;
 }
@@ -17,22 +8,38 @@ export const parseCSVData = (csvText: string): ParsedProduct[] => {
   const lines = csvText.split('\n').filter(line => line.trim());
   const products: ParsedProduct[] = [];
 
-  // Saltar header
-  for (let i = 1; i < lines.length; i++) {
+  if (lines.length === 0) return products;
+
+  // Detectar header y saltar
+  let startIndex = 0;
+  const firstLine = parseCSVLine(lines[0]);
+  
+  // Si la primera línea parece ser un header (contiene palabras clave)
+  const headerKeywords = ['nombre', 'producto', 'nombre producto', 'capacidad', 'marca', 'codigo', 'code', 'url', 'imagen', 'image'];
+  const isHeader = firstLine.some(cell => 
+    headerKeywords.some(keyword => cell.toLowerCase().includes(keyword))
+  );
+  
+  if (isHeader) {
+    startIndex = 1;
+  }
+
+  // Parsear productos
+  for (let i = startIndex; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
 
-    // Parsear CSV respetando comillas
     const values = parseCSVLine(line);
     
-    if (values.length >= 6) {
+    // Esperar al menos 5 columnas: nombre, capacidad, marca, codigo, url
+    if (values.length >= 5) {
       const product: ParsedProduct = {
-        name: values[1]?.trim() || "",
+        name: values[0]?.trim() || "",
+        capacity: values[1]?.trim() || "",
         brand: values[2]?.trim() || "",
-        capacity: values[3]?.trim() || "",
+        code: values[3]?.trim() || "",
         image: values[4]?.trim() || "",
-        code: values[5]?.trim() || "",
-        rowNumber: i,
+        rowNumber: i + 1,
       };
 
       products.push(product);
@@ -43,7 +50,7 @@ export const parseCSVData = (csvText: string): ParsedProduct[] => {
 };
 
 // Parsear línea CSV respetando comillas
-const parseCSVLine = (line: string): string[] => {
+export const parseCSVLine = (line: string): string[] => {
   const result = [];
   let current = "";
   let insideQuotes = false;
@@ -78,12 +85,15 @@ export const validateProducts = (products: ParsedProduct[]): { valid: ParsedProd
   products.forEach((product) => {
     const rowErrors: string[] = [];
 
-    if (!product.name) rowErrors.push("Producto vacío");
-    if (!product.brand) rowErrors.push("Marca vacía");
-    if (!product.capacity) rowErrors.push("Unidad vacía");
-    if (!product.code) rowErrors.push("Código vacío");
-    if (!product.image) rowErrors.push("URL vacía");
-    else if (product.image && !product.image.startsWith("http")) rowErrors.push("URL inválida (debe comenzar con http)");
+    if (!product.name?.trim()) rowErrors.push("Nombre del producto vacío");
+    if (!product.capacity?.trim()) rowErrors.push("Capacidad vacía");
+    if (!product.brand?.trim()) rowErrors.push("Marca vacía");
+    if (!product.code?.trim()) rowErrors.push("Código vacío");
+    if (!product.image?.trim()) {
+      rowErrors.push("URL de imagen vacía");
+    } else if (product.image && !product.image.startsWith("http")) {
+      rowErrors.push("URL inválida (debe comenzar con http)");
+    }
 
     if (rowErrors.length > 0) {
       errors.push(`Fila ${product.rowNumber}: ${rowErrors.join(", ")}`);

@@ -3,29 +3,44 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ProductsProvider } from "@/context/ProductsContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
 import Productos from "./pages/Productos.tsx";
 import Marcas from "./pages/Marcas.tsx";
 import MarcaDetalle from "./pages/MarcaDetalle.tsx";
+import Login from "./pages/Login.tsx";
+import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 // te amo rossy
 const App = () => (
-  <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <ProductsProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="/marcas" element={<Marcas />} />
-          <Route path="/marca/:brand" element={<MarcaDetalle />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ProductsProvider>
-  </TooltipProvider>
+  <AuthProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <ProductsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="/marcas" element={<Marcas />} />
+            <Route path="/marca/:brand" element={<MarcaDetalle />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ProductsProvider>
+    </TooltipProvider>
+  </AuthProvider>
 );
 
 export default App;
