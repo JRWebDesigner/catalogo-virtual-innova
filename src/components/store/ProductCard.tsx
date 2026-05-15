@@ -92,9 +92,9 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
           </div> */}
         </dl>
 
-        <a 
-          href={getWhatsAppLink(product)} 
-          target="_blank" 
+        <a
+          href={getWhatsAppLink(product)}
+          target="_blank"
           rel="noopener noreferrer"
           className="mt-4"
         >

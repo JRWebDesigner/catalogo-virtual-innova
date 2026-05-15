@@ -192,7 +192,7 @@ export const ImportDialog = ({ open, onOpenChange, onImport }: ImportDialogProps
 
         {step === "done" && (
           <div className="flex flex-col items-center justify-center py-8 gap-4">
-            <CheckCircle2 className="h-12 w-12 text-green-600" />
+            <CheckCircle2 className="h-12 w-12 text-red-600" />
             <p className="text-lg font-semibold">¡Importación completada!</p>
             <p className="text-sm text-muted-foreground text-center">
               {validProducts.length} producto{validProducts.length !== 1 ? "s" : ""} importado{validProducts.length !== 1 ? "s" : ""} correctamente
