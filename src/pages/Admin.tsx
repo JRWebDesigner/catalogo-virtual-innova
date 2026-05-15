@@ -139,7 +139,7 @@ export default function Admin() {
         {/* Products Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Productos </CardTitle>
+            <CardTitle>Productos</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
