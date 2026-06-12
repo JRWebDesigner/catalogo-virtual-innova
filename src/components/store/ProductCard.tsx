@@ -23,84 +23,61 @@ const getWhatsAppLink = (product: Product): string => {
 
 export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   return (
-    <article className="group relative flex flex-col overflow-hidden border border-border bg-gradient-card shadow-sm transition-spring hover:-translate-y-1 hover:border-accent/50 hover:shadow-elegant animate-fade-up">
-      <div className="relative aspect-square overflow-hidden bg-secondary">
-        {/* Logo de fondo */}
-        <div 
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: `url(/favicon.svg)`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "100%",
-          }}
+    <article className="group relative flex flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/5 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-spring hover:-translate-y-1 hover:border-[#db070b]/30 hover:shadow-[0_30px_110px_rgba(219,7,11,0.18)] animate-fade-up">
+      <div className="relative aspect-square overflow-hidden bg-slate-950/90">
+        {/* Fondo de favicon visible */}
+        <div
+          className="absolute inset-0 bg-[url('/favicon.svg')] bg-center bg-no-repeat bg-[length:100%] opacity-20"
+          style={{ backgroundColor: "rgba(15,23,42,0.75)" }}
         />
-        
-        {/* Imagen del producto superpuesta */}
-        {product.image ? (
-          <img
-            src={product.image}
-            alt={product.name}
-            loading="lazy"
-            className="relative h-full w-full object-cover transition-spring group-hover:scale-105"
-          />
-        ) : (
-          <div className="relative grid h-full w-full place-items-center text-muted-foreground">
-            <Package className="h-12 w-12" />
-          </div>
-        )}
-        {/* <div className="absolute right-3 top-3 flex gap-1.5 opacity-0 translate-y-1 transition-spring group-hover:opacity-100 group-hover:translate-y-0">
-          <button
-            onClick={() => onEdit(product)}
-            className="grid h-9 w-9 place-items-center rounded-full bg-background/95 text-primary shadow-md backdrop-blur transition-base hover:bg-accent hover:text-accent-foreground"
-            aria-label="Editar"
-          >
-            <Pencil className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => onDelete(product.id)}
-            className="grid h-9 w-9 place-items-center rounded-full bg-background/95 text-destructive shadow-md backdrop-blur transition-base hover:bg-destructive hover:text-destructive-foreground"
-            aria-label="Eliminar"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
-        </div> */}
-      </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(219,7,11,0.16),transparent_25%),radial-gradient(circle_at_bottom_right,rgba(0,87,190,0.16),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-slate-950/60 to-transparent" />
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <div>
-          <h3 className=" text-lg font-bold leading-tight text-foreground line-clamp-2 text-center">
-            {product.name}
-          </h3>
+        <div className="flex items-center h-full">
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              loading="lazy"
+              className="relative z-0 max-h-[70%] w-full object-contain transition-spring duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="relative z-10 grid h-full w-full place-items-center text-slate-300">
+              <Package className="h-14 w-14" />
+            </div>
+          )}
         </div>
 
-        <dl className="mt-auto space-y-1.5 text-sm">
-          <div className="flex justify-center gap-2 border-t border-dashed border-border pt-2.5">
-            <dd className="font-semibold text-foreground text-center">{product.capacity}</dd>
-          </div>
-          {/* <div className="flex justify-between gap-2">
-            <dt className="text-muted-foreground">Código</dt>
-            <dd className="font-mono text-xs font-semibold text-primary">{product.code}</dd>
-          </div> */}
-          <div className="flex justify-between gap-2">
-            <dt className="text-muted-foreground">Marca</dt>
-            <dd className="font-mono text-xs font-semibold text-primary">{product.brand}</dd>
-          </div>
-          {/* <div className="flex justify-between gap-2">
-            <dt className="text-muted-foreground">Unidad de Medida</dt>
-            <dd className="font-mono text-xs font-semibold text-primary">{product.capacity}</dd>
-          </div> */}
-        </dl>
+        <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/80 shadow-sm">
+          {product.code}
+        </div>
+        <div className="absolute right-4 bottom-4 rounded-2xl bg-white/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+          {product.capacity}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-4 p-5">
+        <div className="space-y-2">
+          <h3 className="text-lg font-black leading-tight text-slate-950 line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-sm text-slate-600">Marca <span className="font-semibold text-slate-900">{product.brand}</span></p>
+        </div>
+
+        <div className="mt-auto rounded-3xl border border-dashed border-slate-200/80 bg-slate-50/80 p-4 text-sm text-slate-700 shadow-sm shadow-slate-200/50">
+          <p className="font-semibold text-slate-900">Todo listo para tu laboratorio</p>
+          <p className="mt-1 text-xs text-slate-500">Consulta disponibilidad y envío inmediato por WhatsApp.</p>
+        </div>
 
         <a
           href={getWhatsAppLink(product)}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4"
+          className="mt-2"
         >
-          <Button className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white text-lg">
-            <MessageCircle className="h-4 w-4" />
-            Obtener mas informacion
+          <Button className="w-full gap-2 rounded-full bg-[#25D366] px-5 py-3 text-base font-semibold text-white shadow-[0_16px_40px_rgba(37,211,102,0.25)] hover:bg-[#1ebe59]">
+            <MessageCircle className="h-5 w-5" />
+            Obtener más información
           </Button>
         </a>
       </div>

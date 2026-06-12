@@ -32,66 +32,27 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
     );
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
-      {/* Desktop header */}
-      <div className="hidden lg:block">
-        <div className="container flex items-center justify-between h-20">
-          
-          <div className="flex justify-center py-3 w-[300px]">
-            <div className="relative w-full max-w-lg">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={search ?? ""}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Buscar producto, marca o código…"
-                className="h-11 rounded-full border-border/80 bg-secondary/60 pl-10 text-sm focus-visible:ring-accent"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            {/* Logo */}
-            <NavLink to="/" end className="flex-shrink-0 text-xl font-bold text-red-800">
-              CATALOGO VIRTUAL
-            </NavLink>
-
-            {/* Navigation */}
-            <nav className="flex items-center gap-1">
-              <NavLink to="/" end className={navClass}>Inicio</NavLink>
-              <NavLink to="/productos" className={navClass}>Productos</NavLink>
-            </nav>
-          </div>
-          
-        </div>
-        
-      </div>
-
-      {/* Mobile/Tablet header */}
-      <div className="lg:hidden">
-        {/* Top bar with logo and search */}
-        <div className="container flex h-16 items-center gap-3 py-2">
-          {/* Logo */}
-          <NavLink to="/" end className="flex-shrink-0 text-xs font-bold text-primary sm:text-sm">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/10 bg-white/85 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-950/90">
+      <div className="container grid gap-4 py-4 lg:grid-cols-[1.1fr_1fr_1fr] lg:items-center lg:py-5">
+        <div className="flex items-center gap-4">
+          <NavLink to="/" end className="text-lg font-black uppercase tracking-[0.2em] text-slate-950 dark:text-white">
             CATALOGO VIRTUAL
           </NavLink>
-
-          {/* Search - visible on tablet and small screens */}
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={search ?? ""}
-              onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Buscar…"
-              className="h-9 rounded-full border-border/80 bg-secondary/60 pl-9 text-xs placeholder:text-xs"
-            />
-          </div>
+         
         </div>
-
-        {/* Navigation tabs */}
-        <nav className="container flex items-center gap-1 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-          <NavLink to="/" end className={navClass}>Inicio</NavLink>
-          <NavLink to="/productos" className={navClass}>Productos</NavLink>
-          {/* <NavLink to="/marcas" className={navClass}>Marcas</NavLink> */}
-        </nav>
+         <nav className="items-center gap-2 lg:flex w-full justify-center items-center">
+            <NavLink to="/" end className={navClass}>Inicio</NavLink>
+            <NavLink to="/productos" className={navClass}>Productos</NavLink>
+          </nav>
+        <div className="relative mx-auto w-full max-w-2xl">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={search ?? ""}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Buscar producto, marca o código…"
+            className="h-12 rounded-full border border-slate-200 bg-white/90 pl-12 text-sm text-foreground shadow-sm transition focus-visible:border-[#0057be] focus-visible:ring-2 focus-visible:ring-[#0057be]/15 dark:border-slate-800 dark:bg-slate-900/80"
+          />
+        </div>
       </div>
     </header>
   );
