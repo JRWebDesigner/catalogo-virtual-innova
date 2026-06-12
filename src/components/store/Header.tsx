@@ -36,7 +36,8 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
       {/* Desktop header */}
       <div className="hidden lg:block">
         <div className="container flex items-center justify-between h-20">
-          <div className="container flex justify-center py-3">
+          
+          <div className="flex justify-center py-3 w-[300px]">
             <div className="relative w-full max-w-lg">
               <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -49,7 +50,7 @@ export const Header = ({ onAdd, onImport, search, onSearch }: HeaderProps) => {
           </div>
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <NavLink to="/" end className="flex-shrink-0 text-xl font-bold text-primary">
+            <NavLink to="/" end className="flex-shrink-0 text-xl font-bold text-red-800">
               CATALOGO VIRTUAL
             </NavLink>
 

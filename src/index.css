@@ -135,9 +135,24 @@
     @apply border-border;
   }
 
+  html {
+    min-height: 100%;
+    background-color: hsl(214 18% 94%);
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(219, 7, 11, 0.18), transparent 14%),
+      radial-gradient(circle at 90% 15%, rgba(0, 87, 190, 0.16), transparent 18%),
+      radial-gradient(circle at 50% 80%, rgba(219, 7, 11, 0.08), transparent 10%),
+      linear-gradient(180deg, hsl(214 25% 96%) 0%, hsl(214 20% 92%) 45%, hsl(214 18% 94%) 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     font-feature-settings: "ss01", "cv11";
+    min-height: 100%;
+    background: transparent;
   }
   
 }

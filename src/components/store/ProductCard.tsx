@@ -9,7 +9,7 @@ interface ProductCardProps {
   onDelete: (id: string) => void;
 }
 
-const WHATSAPP_NUMBER = "76265987";
+const WHATSAPP_NUMBER = "77793456";
 
 const generateWhatsAppMessage = (product: Product): string => {
   const message = `Hola, me interesa en el producto:\n\n📦 *${product.name}*\n📋 Código: ${product.code}\n📏 Capacidad: ${product.capacity}`;
@@ -29,7 +29,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => 
         <div 
           className="absolute inset-0 opacity-40"
           style={{
-            backgroundImage: `url(/favicon.ico)`,
+            backgroundImage: `url(/favicon.svg)`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "100%",
