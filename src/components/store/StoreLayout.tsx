@@ -48,15 +48,6 @@ export const StoreLayout = ({ children, search, onSearch }: StoreLayoutProps) =>
       <Header onAdd={openNew} onImport={openImport} search={search} onSearch={onSearch} />
       <main>{children({ openEdit, openImport })}</main>
 
-      <footer className="mt-16 border-t border-border bg-secondary/40">
-        <div className="container flex flex-col items-center justify-between gap-3 py-8 text-sm text-muted-foreground md:flex-row">
-          <p>
-            <span className=" font-black text-primary">CATALOGO VIRTUAL</span> · CATALOGO VIRTUAL profesional
-          </p>
-          <p className="text-xs">Listo para conectarse a tu base de datos.</p>
-        </div>
-      </footer>
-
       <ProductForm
         open={formOpen}
         onOpenChange={setFormOpen}
